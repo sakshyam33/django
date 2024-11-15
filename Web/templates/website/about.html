@@ -18,6 +18,27 @@
             color: burlywood;
             padding: 20px;
             text-align: center;
+            position: relative;
+        }
+
+        /* Login/Signup Button */
+        .login-signup {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .login-signup button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-signup button:hover {
+            background-color: #16a085;
         }
 
         nav {
@@ -136,6 +157,9 @@
 
     <header>
         <h1>About Our Tea Shop</h1>
+        <div class="login-signup">
+            <button onclick="location.href='/login'">Login / Signup</button>
+        </div>
     </header>
 
     <nav>
@@ -183,4 +207,3 @@
 
 </body>
 </html>
-

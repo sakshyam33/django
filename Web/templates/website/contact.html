@@ -22,14 +22,34 @@
         header {
             background-color: #34495e;
             color: white;
-            
-            padding:20px;
+            padding: 20px;
             text-align: center;
+            position: relative;
         }
 
         header h1 {
             color: burlywood;
-            padding:2rem;
+            padding: 2rem;
+        }
+
+        /* Login/Signup Button */
+        .login-signup {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .login-signup button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-signup button:hover {
+            background-color: #16a085;
         }
 
         nav ul {
@@ -120,6 +140,9 @@
 <body>
     <header>
         <h1>Contact Us</h1>
+        <div class="login-signup">
+            <button onclick="location.href='/login'">Login / Signup</button>
+        </div>
         <nav>
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'about' %}">About Us</a>
@@ -151,7 +174,6 @@
                 <button type="submit">Send Message</button>
             </form>
         </section>
-
     </main>
 
     <footer>

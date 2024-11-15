@@ -132,20 +132,31 @@
         <a href="{% url 'contact' %}">Contact</a>
     </nav>
 
-    <!-- Hero Section -->
+    {% comment %} <!-- Hero Section -->
     <div class="hero">
         <h1>Welcome To Menu</h1>
-    </div>
+    </div> {% endcomment %}
 
-    <!-- Tea Cards Container -->
     <div class="tea-cards-container">
         {% for chai in chais %}
             <div class="card">
-              <img src="../../../media/{{chai.image}}" >
+                <img src="../../../media/{{chai.image}}" >
                 <div class="card-body">
                     <h5 class="card-title">{{ chai.name }}</h5>
-                    <p class="card-text">Some of quick example text to build on the card title and make up the bulk of the card's content.</p>
-                     
+                    <p class="card-text">{{ chai.description }}</p>
+                    <p class="card-text">Available: {{ chai.amount }}</p>
+    
+                    <!-- First Buy Now Button -->
+                    <form action="{% url 'buy_chai' chai.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-primary">Buy Now</button>
+                    </form>
+    
+                    <!-- Additional Buy Now Button if needed -->
+                    {% comment %} <form action="{% url 'buy_chai' chai.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-primary">Buy Now</button>
+                    </form> {% endcomment %}
                 </div>
             </div>
         {% endfor %}

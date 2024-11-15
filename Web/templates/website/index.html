@@ -19,6 +19,25 @@
             color: burlywood;
             padding: 20px;
             text-align: center;
+            position: relative; /* For positioning the login/signup button */
+        }
+
+        /* Login/Signup Button */
+        .login-signup {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .login-signup:hover {
+            background-color: #16a085;
         }
 
         /* Navigation */
@@ -148,6 +167,7 @@
     <!-- Header -->
     <header>
         <h1>Welcome to Our Tea Shop</h1>
+        <a href="{% url 'login' %}" class="login-signup">Login / Signup</a>
     </header>
 
     <!-- Navigation -->
@@ -198,6 +218,9 @@
     <div class="advantages-section">
         <h2>Advantages of Drinking Tea</h2>
 
+        <!-- Advantage Sections Here -->
+         
+
         <!-- Advantage 1 -->
         <div class="advantage">
             <img src="https://images.pexels.com/photos/260024/pexels-photo-260024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Improves Focus">
@@ -233,6 +256,8 @@
             <img src="https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Promotes Hydration">
             <p><strong>Promotes Hydration:</strong> Drinking tea is a great way to stay hydrated, especially when it's caffeine-free herbal tea.</p>
         </div>
+    </div>
+
     </div>
 
     <!-- Footer -->
