@@ -2,7 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,HttpResponse,redirect
 from .models import ChaiVarity
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.shortcuts import render
+from .forms import store
 def all(request):
     chais = ChaiVarity.objects.all()
     return render(request, 'sakshyam/all_item.html', {'chais': chais})
@@ -19,4 +20,14 @@ def buy_chai(request, chai_id):
     else:
         # If out of stock, show an appropriate message or redirect to an error page
         return HttpResponse("Sorry, this chai is out of stock!")
+def contact_view(request):
+    if request.method == 'POST':
+        form = store(request.POST)
+        if form.is_valid():
+            form.save()  # Saves the form data directly to the database
+            return render(request, 'success.html', {'name': form.cleaned_data['name']})
+    else:
+        form = store()
+
+    return render(request, 'contact.html', {'form': form})
 

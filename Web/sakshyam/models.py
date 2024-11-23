@@ -21,3 +21,12 @@ class ChaiVarity(models.Model):
         if self.amount >= quantity:
             self.amount -= quantity
             self.save()
+
+class store(models.Model):
+    username=models.CharField(max_length=50)
+    email=models.EmailField()
+    message=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    # haven't made migrations
+    def __str__(self):
+        return f"{self.name} ({self.email})"
