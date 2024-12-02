@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from sakshyam.forms import contact
 
 def home(request):
     # return HttpResponse("you are at sakshyam's shop")
@@ -10,9 +11,18 @@ def home(request):
 def about(request):
     # return HttpResponse("you are at sakshyam's about")
     return render(request,'website/about.html')
+
 def contact(request):
-    # return HttpResponse("you are at sakshyam's contact\n you can contact the number 9865992520")
-    return render(request,'website/contact.html')
+    if request.method == 'POST':
+        form = contact(request.POST)  # Use the form class
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            return HttpResponse("Your message has been recieved")
+    else:
+        form = contact()  # Empty form for GET request
+
+    return render(request, 'website/contact.html', {'form': form})  # Pass form to template
+    
 def SignUppage(request):
     if request.method=="POST":
        uname=request.POST.get('username')

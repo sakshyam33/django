@@ -29,4 +29,4 @@ class store(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     # haven't made migrations
     def __str__(self):
-        return f"{self.name} ({self.email})"
+        return f"{self.username} ({self.email})"
