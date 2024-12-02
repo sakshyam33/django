@@ -19,7 +19,7 @@ def contact(request):
             form.save()  # Save the form data to the database
             return HttpResponse("Your message has been recieved")
     else:
-        form = contact()  # Empty form for GET request
+        form = contact(request.GET)  # Empty form for GET request
 
     return render(request, 'website/contact.html', {'form': form})  # Pass form to template
     
