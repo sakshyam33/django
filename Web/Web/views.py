@@ -16,11 +16,10 @@ def contact(request):
     if request.method == 'POST':
         form = contact(request.POST)  # Use the form class
         if form.is_valid():
-            form.save()  # Save the form data to the database
-            return HttpResponse("Your message has been recieved")
+            form.save()  # Save the form data to the database        
     else:
-        form = contact(request.GET)  # Empty form for GET request
-
+        form = contact()  # Empty form for GET request
+        return render(request,'error.html',{'errormessage':'your form data is invalid'})
     return render(request, 'website/contact.html', {'form': form})  # Pass form to template
     
 def SignUppage(request):

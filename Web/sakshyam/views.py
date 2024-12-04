@@ -27,7 +27,7 @@ def contact_view(request):
             form.save()  # Saves the form data directly to the database
             return render(request, 'success.html', {'name': form.cleaned_data['name']})
     else:
-        form = store()
+        return 
 
     return render(request, 'contact.html', {'form': form})
 
