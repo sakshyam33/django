@@ -27,6 +27,6 @@ class store(models.Model):
     email=models.EmailField()
     message=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
-    # haven't made migrations
+   
     def __str__(self):
         return f"{self.username} ({self.email})"

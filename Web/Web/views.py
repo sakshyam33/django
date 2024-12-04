@@ -1,9 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-from sakshyam.forms import contact
+from sakshyam.forms import ContactForm
 
 def home(request):
     # return HttpResponse("you are at sakshyam's shop")
@@ -14,13 +13,17 @@ def about(request):
 
 def contact(request):
     if request.method == 'POST':
-        form = contact(request.POST)  # Use the form class
+        form = ContactForm(request.POST)  # Use the form class
         if form.is_valid():
-            form.save()  # Save the form data to the database        
+            form.save()  # Save the form data to the database  
+            return redirect('contact')
+        else:
+             return render(request,'website/error.html',{'errormessage':'your form data is invalid'})     
     else:
-        form = contact()  # Empty form for GET request
-        return render(request,'error.html',{'errormessage':'your form data is invalid'})
-    return render(request, 'website/contact.html', {'form': form})  # Pass form to template
+        form = ContactForm()  # Empty form for GET request
+        return render(request, 'website/contact.html', {'form': form})  # Pass form to template
+
+    # return render(request, 'website/contact.html', {'form': form})  # Pass form to template
     
 def SignUppage(request):
     if request.method=="POST":
