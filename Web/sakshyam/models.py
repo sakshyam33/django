@@ -9,10 +9,16 @@ class ChaiVarity(models.Model):
         ('Gr', 'Green'),
         ('Co', 'Coffee'),
     ]
+    CHAI_SIZE=[
+        ('S','small'),
+        ('M','medium'),
+        ('L','large')
+    ]
     name = models.CharField(max_length=20)
     image = models.ImageField(upload_to='chais/', null=True, blank=True)
     date_add = models.DateField(default=timezone.now)
-    ttype = models.CharField(max_length=2, choices=CHAI_TYPE_CHOICE, default=CHAI_TYPE_CHOICE[0])
+    ttype = models.CharField(max_length=2, choices=CHAI_TYPE_CHOICE, default='ML')
+    size= models.CharField(max_length=1,choices=CHAI_SIZE,default='S')
     description = models.TextField(default='')
     amount = models.PositiveIntegerField(default=10)  # New field for stock amount
 

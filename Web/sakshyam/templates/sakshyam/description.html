@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}Product Description{% endblock %}
+
+{% block content %}
+    <style>
+        .description-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .description-container img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .description-container h1 {
+            margin-bottom: 1rem;
+        }
+
+        .description-container p {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: white;
+            background-color: #007bff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .back-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <div class="description-container">
+        <img src="{{ chai.image.url }}" alt="{{ chai.name }}">
+        <h1>{{ chai.name }}</h1>
+        <p><strong>Type:</strong> {{ chai.get_ttype_display }}</p>
+        <p><strong>Size:</strong> {{ chai.get_size_display }}</p>
+        <p><strong>Description:</strong> {{ chai.description }}</p>
+        <p><strong>Available Stock:</strong> {{ chai.amount }}</p>
+        <a href="{% url 'menu' %}" class="back-link">Back to Menu</a>
+    </div>
+{% endblock %}

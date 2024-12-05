@@ -150,7 +150,9 @@
                     <form action="{% url 'buy_chai' chai.id %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn-primary">Buy Now</button>
+                        <a href ="{descrption.html}">View Description</a>
                     </form>
+                    
     
                     <!-- Additional Buy Now Button if needed -->
                     {% comment %} <form action="{% url 'buy_chai' chai.id %}" method="post">
