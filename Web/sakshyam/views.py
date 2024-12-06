@@ -31,3 +31,7 @@ def contact_view(request):
 
     return render(request, 'contact.html', {'form': form})
 
+def view_description(request, chai_id):
+    # Fetch the chai item by its primary key
+    chai = get_object_or_404(ChaiVarity, id=chai_id)
+    return render(request, 'sakshyam/description.html', {'chai': chai})
