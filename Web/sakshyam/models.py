@@ -14,6 +14,7 @@ class ChaiVarity(models.Model):
         ('M','medium'),
         ('L','large')
     ]
+    id = models.AutoField(primary_key=True) #not done migration
     name = models.CharField(max_length=20)
     image = models.ImageField(upload_to='chais/', null=True, blank=True)
     date_add = models.DateField(default=timezone.now)
