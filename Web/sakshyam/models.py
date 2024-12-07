@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class ChaiVarity(models.Model):
     CHAI_TYPE_CHOICE = [
@@ -37,3 +38,10 @@ class store(models.Model):
    
     def __str__(self):
         return f"{self.username} ({self.email})"
+class Cart(models.Model):
+        user=models.ForeignKey(User,on_delete=models.CASCADE)
+        chai=models.ForeignKey(ChaiVarity,on_delete=models.CASCADE)
+        quantity=models.PositiveIntegerField(default=1)
+
+        def __str__(self):
+            return (f"{self.User}:{self.chai} x {self.quantity}")

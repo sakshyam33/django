@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,HttpResponse,redirect
-from .models import ChaiVarity
+from .models import ChaiVarity,Cart
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render
 from .forms import store
@@ -35,3 +35,19 @@ def view_description(request, chai_id):
     # Fetch the chai item by its primary key
     chai = get_object_or_404(ChaiVarity, id=chai_id)
     return render(request, 'sakshyam/description.html', {'chai': chai})
+
+def add_cart(request,chai_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    chai=get_object_or_404(ChaiVarity,id=chai_id)
+    cart_item,created=Cart.objects.get_or_create(user=request.user,chai=chai)
+    if not created:
+        cart_item.quantity+=1
+        cart_item.save()
+    return redirect('viewcart') #view cart has not been created
+def view_cart(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    cart_items = Cart.objects.filter(user=request.user)
+    return render(request, 'sakshyam/cart.html', {'cart_items': cart_items})
