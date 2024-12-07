@@ -143,15 +143,15 @@
                 <img src="../../../media/{{chai.image}}" >
                 <div class="card-body">
                     <h5 class="card-title">{{ chai.name }}</h5>
-                    <p class="card-text">{{ chai.description }}</p>
+                    {% comment %} <p class="card-text">{{ chai.description }}</p> {% endcomment %}
                     <p class="card-text">Available: {{ chai.amount }}</p>
     
                     <!-- First Buy Now Button -->
-                    <form action="{% url 'buy_chai' chai.id %}" method="post">
+                    {% comment %} <form action="{% url 'buy_chai' chai.id %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn-primary">Buy Now</button>
-                        {% comment %} <a href ="{descrption.html}">View Description</a> {% endcomment %}
-                    </form>
+                        {% comment %} <a href ="{descrption.html}">View Description</a> 
+                    </form> {% endcomment %}
                     <a href="{% url 'view_description' chai.id %}" class="btn-primary">View Description</a>
     
                     <!-- Additional Buy Now Button if needed -->

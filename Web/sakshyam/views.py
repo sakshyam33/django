@@ -8,14 +8,22 @@ def all(request):
     chais = ChaiVarity.objects.all()
     return render(request, 'sakshyam/all_item.html', {'chais': chais})
 
-@login_required(login_url='login')  # Ensure the user is logged in before buying
+@login_required(login_url='login')  # Ensure the user is logged in before accessing this view
 def buy_chai(request, chai_id):
-    # Retrieve the chai by its id
+    # Retrieve the chai by its ID
     chai = get_object_or_404(ChaiVarity, id=chai_id)
 
     if chai.amount > 0:
-        # Reduce the chai stock by 1 (or more if you want to allow quantity selection)
+        # Reduce the chai stock by 1
         chai.reduce_amount(quantity=1)
+
+        # Add the item to the user's cart
+        cart_item, created = Cart.objects.get_or_create(user=request.user, chai=chai)
+        if not created:
+            # If the item already exists in the cart, increase the quantity
+            cart_item.quantity += 1
+            cart_item.save()
+
         return redirect('menu')  # Redirect to the menu page after purchase
     else:
         # If out of stock, show an appropriate message or redirect to an error page

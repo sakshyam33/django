@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+    <h1>Your Cart</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.chai.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>
+                        <!-- Add functionality to remove or adjust quantity -->
+                        <form action="{% url 'remove_from_cart' item.chai.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'checkout' %}" class="btn-primary">Proceed to Checkout</a>
+{% endblock %}
