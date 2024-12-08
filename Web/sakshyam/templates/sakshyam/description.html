@@ -49,5 +49,10 @@
         <p><strong>Description:</strong> {{ chai.description }}</p>
         <p><strong>Available Stock:</strong> {{ chai.amount }}</p>
         <a href="{% url 'menu' %}" class="back-link">Back to Menu</a>
+        <form action="{% url 'add_cart' chai.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class='btn-primary'>Add to cart</button>
+        </form>
+            {% comment %} <a href="{add_cart.html}">Add to cart</a> {% endcomment %}
     </div>
 {% endblock %}

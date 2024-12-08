@@ -8,26 +8,26 @@ def all(request):
     chais = ChaiVarity.objects.all()
     return render(request, 'sakshyam/all_item.html', {'chais': chais})
 
-@login_required(login_url='login')  # Ensure the user is logged in before accessing this view
-def buy_chai(request, chai_id):
-    # Retrieve the chai by its ID
-    chai = get_object_or_404(ChaiVarity, id=chai_id)
+# @login_required(login_url='login')  # Ensure the user is logged in before accessing this view
+# def buy_chai(request, chai_id):
+#     # Retrieve the chai by its ID
+#     chai = get_object_or_404(ChaiVarity, id=chai_id)
 
-    if chai.amount > 0:
-        # Reduce the chai stock by 1
-        chai.reduce_amount(quantity=1)
+#     if chai.amount > 0:
+#         # Reduce the chai stock by 1
+#         chai.reduce_amount(quantity=1)
 
-        # Add the item to the user's cart
-        cart_item, created = Cart.objects.get_or_create(user=request.user, chai=chai)
-        if not created:
-            # If the item already exists in the cart, increase the quantity
-            cart_item.quantity += 1
-            cart_item.save()
+#         # Add the item to the user's cart
+#         cart_item, created = Cart.objects.get_or_create(user=request.user, chai=chai)
+#         if not created:
+#             # If the item already exists in the cart, increase the quantity
+#             cart_item.quantity += 1
+#             cart_item.save()
 
-        return redirect('menu')  # Redirect to the menu page after purchase
-    else:
-        # If out of stock, show an appropriate message or redirect to an error page
-        return HttpResponse("Sorry, this chai is out of stock!")
+#         return redirect('menu')  # Redirect to the menu page after purchase
+#     else:
+#         # If out of stock, show an appropriate message or redirect to an error page
+#         return HttpResponse("Sorry, this chai is out of stock!")
 def contact_view(request):
     if request.method == 'POST':
         form = store(request.POST)
@@ -39,20 +39,47 @@ def contact_view(request):
 
     return render(request, 'contact.html', {'form': form})
 
+@login_required(login_url='login')  # Ensure the user is logged in
+def add_to_cart(request, chai_id):
+    """
+    Add an item to the cart.
+
+    Args:
+        request: HTTP request object.
+        chai_id: ID of the chai item to be added to the cart.
+    """
+    # Retrieve the chai by its ID
+    chai = get_object_or_404(ChaiVarity, id=chai_id)
+
+    if chai.amount <= 0:
+        # If the chai is out of stock
+        return HttpResponse("Sorry, this chai is out of stock!")
+
+    # Add the chai to the user's cart
+    cart_item, created = Cart.objects.get_or_create(user=request.user, chai=chai)
+    if not created:
+        # If the item already exists in the cart, increase the quantity
+        cart_item.quantity += 1
+        cart_item.save()
+
+    # Redirect to the cart view
+    return redirect('viewcart')  # Replace 'viewcart' with the name of your cart view URL
+
+
 def view_description(request, chai_id):
     # Fetch the chai item by its primary key
     chai = get_object_or_404(ChaiVarity, id=chai_id)
     return render(request, 'sakshyam/description.html', {'chai': chai})
 
-def add_cart(request,chai_id):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    chai=get_object_or_404(ChaiVarity,id=chai_id)
-    cart_item,created=Cart.objects.get_or_create(user=request.user,chai=chai)
-    if not created:
-        cart_item.quantity+=1
-        cart_item.save()
-    return redirect('viewcart') #view cart has not been created
+# def add_cart(request,chai_id):
+#     if not request.user.is_authenticated:
+#         return redirect('login')
+#     chai=get_object_or_404(ChaiVarity,id=chai_id)
+#     cart_item,created=Cart.objects.get_or_create(user=request.user,chai=chai)
+#     if not created:
+#         cart_item.quantity+=1
+#         cart_item.save()
+#     return redirect('viewcart') #view cart has not been created
 def view_cart(request):
     if not request.user.is_authenticated:
         return redirect('login')
