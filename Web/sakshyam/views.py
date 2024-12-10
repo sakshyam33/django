@@ -40,30 +40,57 @@ def contact_view(request):
     return render(request, 'contact.html', {'form': form})
 
 @login_required(login_url='login')  # Ensure the user is logged in
+
 def add_to_cart(request, chai_id):
+
     """
+
     Add an item to the cart.
 
+
     Args:
+
         request: HTTP request object.
+
         chai_id: ID of the chai item to be added to the cart.
+
     """
+
+    # Check if the user is authenticated
+
+    if not request.user.is_authenticated:
+
+        return redirect('login')  # Redirect to login if not authenticated
+
+
     # Retrieve the chai by its ID
+
     chai = get_object_or_404(ChaiVarity, id=chai_id)
 
+
     if chai.amount <= 0:
+
         # If the chai is out of stock
+
         return HttpResponse("Sorry, this chai is out of stock!")
 
+
     # Add the chai to the user's cart
+
     cart_item, created = Cart.objects.get_or_create(user=request.user, chai=chai)
+
     if not created:
+
         # If the item already exists in the cart, increase the quantity
+
         cart_item.quantity += 1
+
         cart_item.save()
 
+
     # Redirect to the cart view
-    return redirect('viewcart')  # Replace 'viewcart' with the name of your cart view URL
+
+    return redirect('view_cart')  # Replace 'view_cart' with the name of your cart view URL
 
 
 def view_description(request, chai_id):

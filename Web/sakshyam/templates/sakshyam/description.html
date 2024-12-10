@@ -10,23 +10,24 @@
             background: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            position: relative;
         }
-
+        
         .description-container img {
             max-width: 100%;
             border-radius: 8px;
         }
-
+        
         .description-container h1 {
             margin-bottom: 1rem;
         }
-
+        
         .description-container p {
             margin-bottom: 1rem;
             font-size: 1.2rem;
         }
-
-        .back-link {
+        
+        .back-link, .btn-primary {
             display: inline-block;
             margin-top: 1rem;
             color: white;
@@ -34,11 +35,29 @@
             padding: 0.5rem 1rem;
             text-decoration: none;
             border-radius: 4px;
+            border: none;
+            text-align: center;
         }
-
+        
         .back-link:hover {
             background-color: #0056b3;
         }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .add-to-cart-form {
+            margin: 0;
+        }
+        
     </style>
 
     <div class="description-container">
@@ -48,11 +67,14 @@
         <p><strong>Size:</strong> {{ chai.get_size_display }}</p>
         <p><strong>Description:</strong> {{ chai.description }}</p>
         <p><strong>Available Stock:</strong> {{ chai.amount }}</p>
-        <a href="{% url 'menu' %}" class="back-link">Back to Menu</a>
-        <form action="{% url 'add_cart' chai.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class='btn-primary'>Add to cart</button>
-        </form>
-            {% comment %} <a href="{add_cart.html}">Add to cart</a> {% endcomment %}
+        
+        <div class="button-container">
+            <a href="{% url 'menu' %}" class="back-link">Back to Menu</a>
+            <form action="{% url 'add_cart' chai.id %}" method="post" >
+                {% csrf_token %}
+                <button type="submit" class="btn-primary">Add to cart</button>
+            </form>
+        </div>
     </div>
+    
 {% endblock %}

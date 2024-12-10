@@ -18,14 +18,14 @@
                     <td>{{ item.quantity }}</td>
                     <td>
                         <!-- Add functionality to remove or adjust quantity -->
-                        <form action="{% url 'remove_from_cart' item.chai.id %}" method="post">
+                        {% comment %} <form action="{% url 'remove_from_cart' item.chai.id %}" method="post">
                             {% csrf_token %}
                             <button type="submit">Remove</button>
-                        </form>
+                        </form> {% endcomment %}
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'checkout' %}" class="btn-primary">Proceed to Checkout</a>
+    {% comment %} <a href="{% url 'checkout' %}" class="btn-primary">Proceed to Checkout</a> {% endcomment %}
 {% endblock %}
