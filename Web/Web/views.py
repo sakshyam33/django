@@ -47,16 +47,28 @@ def SignUppage(request):
 
     return render(request, 'signup.html')
 def LoginPage(request):
-    if request.method=="POST":
-       username=request.POST.get('username')
-       pass1=request.POST.get('pass')
-       user=authenticate(request,username=username,password=pass1)
-       if user is not None:
-          login(request,user)
-          return redirect('home')
-       else:
-          return HttpResponse(("Username or password is wrong"))
-    return render(request,'login.html')
+
+    if request.method == "POST":
+
+        username = request.POST.get('username')
+
+        password = request.POST.get('password')  # Changed 'pass' to 'password'
+
+        user = authenticate(request, username=username, password=password)
+
+
+        if user is not None:
+
+            login(request, user)
+
+            return redirect('home')
+
+        else:
+
+            return HttpResponse("Username or password is wrong")
+
+
+    return render(request, 'login.html')
 def Logout(request):
     logout(request)
     return redirect('login')
