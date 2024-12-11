@@ -24,21 +24,28 @@ def contact(request):
         return render(request, 'website/contact.html', {'form': form})  # Pass form to template
 
     # return render(request, 'website/contact.html', {'form': form})  # Pass form to template
-    
+
 def SignUppage(request):
-    if request.method=="POST":
-       uname=request.POST.get('username')
-       email=request.POST.get('email')
-       pass1=request.POST.get('password1') 
-       pass2=request.POST.get('password2')
-       if pass1!=pass2:
-           return HttpResponse("you have entered the wrong password")
-       else:
-        my_user=User.objects.create_user(uname,email,pass1,pass2)  
+    if request.method == "POST":
+        uname = request.POST.get('username')
+        email = request.POST.get('email')
+        pass1 = request.POST.get('password1') 
+        pass2 = request.POST.get('password2')
+
+        if pass1 != pass2:
+            return HttpResponse("You have entered the wrong password")
+        
+        if User.objects.filter(username=uname).exists():
+            return HttpResponse("Username already exists")
+        
+        if User.objects.filter(email=email).exists():
+            return HttpResponse("Email already exists")
+
+        my_user = User.objects.create_user(username=uname, email=email, password=pass1)
         my_user.save()
-    #    return HttpResponse("user has been created successfully")#is for checking only and if check dont use but redirect
         return redirect('login')
-    return render(request,'signup.html')
+
+    return render(request, 'signup.html')
 def LoginPage(request):
     if request.method=="POST":
        username=request.POST.get('username')
