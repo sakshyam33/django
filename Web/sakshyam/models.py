@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from phonenumber_field.modelfields import PhoneNumberField
+from django.utils.translation import gettext_lazy as _
 
 class ChaiVarity(models.Model):
     CHAI_TYPE_CHOICE = [
@@ -49,9 +50,9 @@ class Cart(models.Model):
 class Checkout(models.Model):
      user=models.ForeignKey(User,on_delete=models.CASCADE)
      full_name=models.CharField(max_length=50)
-     email=models.EmailField(_(""), max_length=254)
+     email=models.EmailField("Email", max_length=254)
      address=models.CharField(max_length=200)
      street=models.CharField(max_length=255)
      state=models.CharField(max_length=255)
-     phone=models.PhoneNumberField(_(""))
+     phone = PhoneNumberField(verbose_name=_("Phone"))
     #  this hassnot been migrated

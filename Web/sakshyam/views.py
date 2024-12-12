@@ -3,7 +3,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from .models import ChaiVarity,Cart
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render
-from .forms import store
+from .forms import store,Checkout
 def all(request):
     chais = ChaiVarity.objects.all()
     return render(request, 'sakshyam/all_item.html', {'chais': chais})
@@ -35,7 +35,7 @@ def contact_view(request):
             form.save()  # Saves the form data directly to the database
             return render(request, 'success.html', {'name': form.cleaned_data['name']})
     else:
-        return 
+        form = store()
 
     return render(request, 'contact.html', {'form': form})
 
@@ -114,3 +114,12 @@ def view_cart(request):
 
     cart_items = Cart.objects.filter(user=request.user)
     return render(request, 'sakshyam/cart.html', {'cart_items': cart_items})
+def checkout(request):
+    if request.method=='POST':
+        form=Checkout(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request,'success.html')
+        else:
+            form=Checkout()
+    return render(request,'sakshyam/checkout.html',{'form':form})
