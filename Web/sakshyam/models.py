@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 class ChaiVarity(models.Model):
     CHAI_TYPE_CHOICE = [
         ('ML', 'Masala'),
@@ -45,3 +46,12 @@ class Cart(models.Model):
 
         def __str__(self):
             return (f"{self.User}:{self.chai} x {self.quantity}")
+class Checkout(models.Model):
+     user=models.ForeignKey(User,on_delete=models.CASCADE)
+     full_name=models.CharField(max_length=50)
+     email=models.EmailField(_(""), max_length=254)
+     address=models.CharField(max_length=200)
+     street=models.CharField(max_length=255)
+     state=models.CharField(max_length=255)
+     phone=models.PhoneNumberField(_(""))
+    #  this hassnot been migrated

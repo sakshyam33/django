@@ -39,6 +39,11 @@ def contact_view(request):
 
     return render(request, 'contact.html', {'form': form})
 
+def view_description(request, chai_id):
+    # Fetch the chai item by its primary key
+    chai = get_object_or_404(ChaiVarity, id=chai_id)
+    return render(request, 'sakshyam/description.html', {'chai': chai})
+
 @login_required(login_url='login')  # Ensure the user is logged in
 
 def add_to_cart(request, chai_id):
@@ -93,10 +98,6 @@ def add_to_cart(request, chai_id):
     return redirect('view_cart')  # Replace 'view_cart' with the name of your cart view URL
 
 
-def view_description(request, chai_id):
-    # Fetch the chai item by its primary key
-    chai = get_object_or_404(ChaiVarity, id=chai_id)
-    return render(request, 'sakshyam/description.html', {'chai': chai})
 
 # def add_cart(request,chai_id):
 #     if not request.user.is_authenticated:
