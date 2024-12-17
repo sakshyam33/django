@@ -50,38 +50,15 @@
 <body>
   <div class="checkout-form">
     <h2 class="text-center">Checkout Form</h2>
-    <form id="checkoutForm">
-      <!-- User Information -->
-      <div class="form-group">
-        <label for="fullName">Full Name</label>
-        <input type="text" id="fullName" class="form-control" placeholder="Enter your full name" required>
-      </div>
-      <div class="form-group">
-        <label for="address">Address</label>
-        <textarea id="address" class="form-control" placeholder="Enter your address" rows="3" required></textarea>
-      </div>
+    <form method="POST" id="checkoutForm">
+      {% csrf_token %}
+      <!-- Render the Django form dynamically -->
+      {{ form.as_p }}
 
       <!-- Cart Items -->
       <div class="cart-items">
         <h4>Cart Items</h4>
         <div id="cartItemList"></div>
-      </div>
-
-      <!-- Payment Options -->
-      <div class="form-group">
-        <label>Payment Options</label>
-        <div>
-          <input type="radio" id="creditCard" name="payment" value="Credit Card" required>
-          <label for="creditCard">Credit Card</label>
-        </div>
-        <div>
-          <input type="radio" id="debitCard" name="payment" value="Debit Card" required>
-          <label for="debitCard">Debit Card</label>
-        </div>
-        <div>
-          <input type="radio" id="paypal" name="payment" value="PayPal" required>
-          <label for="paypal">PayPal</label>
-        </div>
       </div>
 
       <!-- Checkout Button -->
@@ -121,18 +98,6 @@
       ).join("");
       cartItemList.innerHTML = cartHTML;
     }
-
-    // Handle form submission
-    const checkoutForm = document.getElementById("checkoutForm");
-    checkoutForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const fullName = document.getElementById("fullName").value;
-      const address = document.getElementById("address").value;
-      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-
-      alert(`Thank you, ${fullName}! Your order has been placed.\n\nAddress: ${address}\nPayment Method: ${paymentMethod}`);
-    });
 
     // Load cart items on page load
     loadCartItems();
