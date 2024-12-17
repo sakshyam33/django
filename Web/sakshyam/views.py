@@ -112,8 +112,21 @@ def view_cart(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
+    # Fetch cart items for the logged-in user
     cart_items = Cart.objects.filter(user=request.user)
-    return render(request, 'sakshyam/cart.html', {'cart_items': cart_items})
+
+    # Prepare data for the template
+    cart_data = [
+        {
+            'title': item.product.name,  # Assuming 'product' has a 'name' field
+            'price': item.product.price,  # Assuming 'product' has a 'price' field
+            'quantity': item.quantity,
+            'image': item.product.image.url if item.product.image else '',  # Assuming product image exists
+        }
+        for item in cart_items
+    ]
+
+    return render(request, 'sakshyam/cart.html', {'cart_data': cart_data})
 def checkout(request):
     if request.method=='POST':
         form=Checkout(request.POST)
