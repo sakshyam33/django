@@ -108,6 +108,39 @@ def add_to_cart(request, chai_id):
 #         cart_item.quantity+=1
 #         cart_item.save()
 #     return redirect('viewcart') #view cart has not been created
+def add_items(request,chai_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+    chai=get_object_or_404(ChaiVarity,id=chai_id)
+    cart_item = Cart.objects.filter(user=request.user, chai=chai).first()
+    if not cart_item:
+        return HttpResponse("Item not found in the cart!")
+    if chai.amount<=cart_item.quantity:
+        return HttpResponse('there is no available stock')
+    cart_item.quantity+=1
+    cart_item.save()
+
+    chai.amount-=1
+    chai.save()
+
+    return redirect('view_cart')
+def remove_item(request,chai_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+    chai=get_object_or_404(ChaiVarity,id=chai_id)
+    cart_item = Cart.objects.filter(user=request.user, chai=chai).first()
+    if not cart_item:
+        return HttpResponse("Item not found in the cart!")
+    
+    cart_item.quantity-=1
+    cart_item.save()
+
+    chai.amount+=1
+    chai.save()
+
+    return redirect('view_cart')
 def view_cart(request):
     if not request.user.is_authenticated:
         return redirect('login')
