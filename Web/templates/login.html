@@ -111,6 +111,16 @@
 <body>
     <div class="card">
         <h3>Login Page</h3>
+
+        <!-- Display any messages here -->
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
             

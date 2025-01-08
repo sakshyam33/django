@@ -4,6 +4,10 @@ from .models import ChaiVarity,Cart
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render
 from .forms import store,Checkout
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 def all(request):
     chais = ChaiVarity.objects.all()
     return render(request, 'sakshyam/all_item.html', {'chais': chais})
@@ -108,39 +112,44 @@ def add_to_cart(request, chai_id):
 #         cart_item.quantity+=1
 #         cart_item.save()
 #     return redirect('viewcart') #view cart has not been created
-def add_items(request,chai_id):
+
+@csrf_exempt
+def update_cart(request, chai_id):
     if not request.user.is_authenticated:
-        return redirect('login')
-    
-    chai=get_object_or_404(ChaiVarity,id=chai_id)
-    cart_item = Cart.objects.filter(user=request.user, chai=chai).first()
-    if not cart_item:
-        return HttpResponse("Item not found in the cart!")
-    if chai.amount<=cart_item.quantity:
-        return HttpResponse('there is no available stock')
-    cart_item.quantity+=1
-    cart_item.save()
+        return JsonResponse({'success': False, 'message': 'You must be logged in to update the cart.'})
 
-    chai.amount-=1
-    chai.save()
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            change = data.get('change', 0)
+            
+            chai = get_object_or_404(ChaiVarity, id=chai_id)
+            cart_item = Cart.objects.filter(user=request.user, chai=chai).first()
+            
+            if not cart_item:
+                return JsonResponse({'success': False, 'message': 'Item not found in the cart!'})
 
-    return redirect('view_cart')
-def remove_item(request,chai_id):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    
-    chai=get_object_or_404(ChaiVarity,id=chai_id)
-    cart_item = Cart.objects.filter(user=request.user, chai=chai).first()
-    if not cart_item:
-        return HttpResponse("Item not found in the cart!")
-    
-    cart_item.quantity-=1
-    cart_item.save()
+            if change > 0:  # Increase quantity
+                if chai.amount <= cart_item.quantity:
+                    return JsonResponse({'success': False, 'message': 'No available stock.'})
+                cart_item.quantity += change
+                chai.amount -= change
+            elif change < 0:  # Decrease quantity
+                if cart_item.quantity + change <= 0:
+                    cart_item.delete()
+                else:
+                    cart_item.quantity += change
+                chai.amount -= change
+            
+            cart_item.save()
+            chai.save()
 
-    chai.amount+=1
-    chai.save()
+            return JsonResponse({'success': True, 'message': 'Cart updated successfully.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)})
 
-    return redirect('view_cart')
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
 def view_cart(request):
     if not request.user.is_authenticated:
         return redirect('login')

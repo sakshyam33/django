@@ -3,6 +3,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from sakshyam.forms import ContactForm
+from django.contrib import messages
 
 def home(request):
     # return HttpResponse("you are at sakshyam's shop")
@@ -47,28 +48,30 @@ def SignUppage(request):
 
     return render(request, 'signup.html')
 def LoginPage(request):
-
     if request.method == "POST":
 
         username = request.POST.get('username')
+        password = request.POST.get('password')
 
-        password = request.POST.get('password')  # Changed 'pass' to 'password'
+        # Check if the user exists
+        user = User.objects.filter(username=username).first()
 
+        if user is None:
+            messages.error(request, "Username does not exist.")
+            return redirect('login')
+
+        # Authenticate the user
         user = authenticate(request, username=username, password=password)
 
-
         if user is not None:
-
             login(request, user)
-
             return redirect('home')
-
         else:
-
-            return HttpResponse("Username or password is wrong")
-
+            messages.error(request, "Incorrect password.")
+            return redirect('login')
 
     return render(request, 'login.html')
+
 def Logout(request):
     logout(request)
     return redirect('login')

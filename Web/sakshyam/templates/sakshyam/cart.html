@@ -81,16 +81,30 @@
     </div>
   </div>
 
+  
   <script>
-    function updateQuantity(index, change) {
-      // Send an AJAX request to update cart quantity
-      alert("Update item " + index + " by " + change);
+    function updateQuantity(chaiId, change) {
+      fetch(/update-cart/${chaiId}/, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}', // Include CSRF token
+        },
+        body: JSON.stringify({ change: change }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Optionally update the cart UI
+            location.reload();
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
     }
+</script>
 
-    function removeItem(index) {
-      // Send an AJAX request to remove the item
-      alert("Remove item at index " + index);
-    }
-  </script>
+
 </body>
 </html>
