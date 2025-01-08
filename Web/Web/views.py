@@ -26,6 +26,7 @@ def contact(request):
 
     # return render(request, 'website/contact.html', {'form': form})  # Pass form to template
 
+
 def SignUppage(request):
     if request.method == "POST":
         uname = request.POST.get('username')
@@ -44,9 +45,14 @@ def SignUppage(request):
 
         my_user = User.objects.create_user(username=uname, email=email, password=pass1)
         my_user.save()
+        
+        # Add a success message
+        messages.success(request, "Your account has been successfully created. You can now log in.")
+
         return redirect('login')
 
     return render(request, 'signup.html')
+
 def LoginPage(request):
     if request.method == "POST":
 
