@@ -3,7 +3,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from .models import ChaiVarity,Cart
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render
-from .forms import store,Checkout
+from .forms import store,Checkout,FeedbackForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -42,6 +42,17 @@ def contact_view(request):
         form = store()
 
     return render(request, 'contact.html', {'form': form})
+
+def feedback_view(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')  # Replace with your success URL
+    else:
+        form = FeedbackForm()
+    
+    return render(request, 'feedback.html', {'form': form})
 
 def view_description(request, chai_id):
     # Fetch the chai item by its primary key

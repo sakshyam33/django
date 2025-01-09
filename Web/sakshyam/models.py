@@ -56,3 +56,18 @@ class Checkout(models.Model):
      state=models.CharField(max_length=255)
      phone = PhoneNumberField(verbose_name=_("Phone"))
     #  this hassnot been migrated
+class Category(models.Model):
+    CHAI_TYPE_CHOICE = [
+        ('ML', 'Masala'),
+        ('Hr', 'Herbal'),
+        ('Mi', 'Milk'),
+        ('Gr', 'Green'),
+        ('Co', 'Coffee'),
+        ('El','Elong'),
+        ('Ma','Matcha'),
+        ('Pr','Peppermint'),
+    ]
+    category = models.CharField(max_length=2, choices=CHAI_TYPE_CHOICE, default='ML')
+class Feedback(models.Model):
+     category=models.ForeignKey(Category, on_delete=models.CASCADE)
+     feedback=models.CharField(max_length=1000)
