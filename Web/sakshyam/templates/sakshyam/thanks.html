@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fdfdfd;
+        }
+
+        /* Card Styling */
+        .card {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #ffffff;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Add Leaf Decoration */
+        .card::before, 
+        .card::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-image: url('https://example.com/leaf.png'); /* Replace with your leaf image URL */
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+        }
+
+        .card::before {
+            top: -20px;
+            left: -20px;
+        }
+
+        .card::after {
+            bottom: -20px;
+            right: -20px;
+        }
+
+        /* Small Text Styling */
+        .small-text {
+            font-size: 0.9rem;
+            color: #888888;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        /* Thank You Text */
+        .thank-you-text {
+            font-size: 2.5rem;
+            color: #2e88c4;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        /* Support Text */
+        .support-text {
+            font-size: 1.2rem;
+            color: #555555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <p class="small-text">SO MUCH LOVE FOR YOU</p>
+        <h1 class="thank-you-text">Thank you<br>For your order!</h1>
+        <p class="support-text">Your support of our small business is <br>(very much!) appreciated.</p>
+    </div>
+</body>
+</html>

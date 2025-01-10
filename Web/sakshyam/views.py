@@ -8,6 +8,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+def thanks(request):
+    return render(request,'thanks.html')
 def all(request):
     chais = ChaiVarity.objects.all()
     return render(request, 'sakshyam/all_item.html', {'chais': chais})
