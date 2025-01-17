@@ -67,7 +67,7 @@ class Category(models.Model):
         ('Ma','Matcha'),
         ('Pr','Peppermint'),
     ]
-    category = models.CharField(max_length=2, choices=CHAI_TYPE_CHOICE, default='ML')
+    category = models.CharField(max_length=2, choices=CHAI_TYPE_CHOICE, default='ML',verbose_name='Chai Type')
 class Feedback(models.Model):
-     category=models.ForeignKey(Category, on_delete=models.CASCADE)
-     feedback=models.CharField(max_length=1000)
+     category=models.ForeignKey(Category, on_delete=models.CASCADE,verbose_name='Chai Type')
+     feedback=models.CharField(max_length=1000,verbose_name='Your Feedback')

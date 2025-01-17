@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-from sakshyam.forms import ContactForm
+from sakshyam.forms import ContactForm,FeedbackForm
 from django.contrib import messages
 
 def home(request):
@@ -81,3 +81,13 @@ def LoginPage(request):
 def Logout(request):
     logout(request)
     return redirect('login')
+def feedback_view(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success')  # Replace with your success URL
+    else:
+        form = FeedbackForm()
+    
+    return render(request, 'feedback.html', {'form': form})

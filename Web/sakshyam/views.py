@@ -45,16 +45,7 @@ def contact_view(request):
 
     return render(request, 'contact.html', {'form': form})
 
-def feedback_view(request):
-    if request.method == 'POST':
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('success_url')  # Replace with your success URL
-    else:
-        form = FeedbackForm()
-    
-    return render(request, 'feedback.html', {'form': form})
+
 
 def view_description(request, chai_id):
     # Fetch the chai item by its primary key
