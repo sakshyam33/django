@@ -11,6 +11,9 @@ class ChaiVarity(models.Model):
         ('Mi', 'Milk'),
         ('Gr', 'Green'),
         ('Co', 'Coffee'),
+        ('El','Elong'),
+        ('Ma','Matcha'),
+        ('Pr','Peppermint'),
     ]
     CHAI_SIZE=[
         ('S','small'),
@@ -25,7 +28,7 @@ class ChaiVarity(models.Model):
     size= models.CharField(max_length=1,choices=CHAI_SIZE,default='S')
     description = models.TextField(default='')
     amount = models.PositiveIntegerField(default=10)  # New field for stock amount
-
+    price=models.DecimalField(max_digits=6,decimal_places=2)
     def reduce_amount(self, quantity=1):
         """Decrease the stock by the specified quantity."""
         if self.amount >= quantity:

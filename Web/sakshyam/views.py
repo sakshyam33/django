@@ -164,10 +164,10 @@ def view_cart(request):
     # Prepare data for the template
     cart_data = [
         {
-            'title': item.product.name,  # Assuming 'product' has a 'name' field
-            'price': item.product.price,  # Assuming 'product' has a 'price' field
+            'title': item.chai.name,  # Assuming 'product' has a 'name' field
+            'price': item.chai.price,  # Assuming 'product' has a 'price' field
             'quantity': item.quantity,
-            'image': item.product.image.url if item.product.image else '',  # Assuming product image exists
+            'image': item.chai.image.url if item.chai.image else '',  # Assuming product image exists
         }
         for item in cart_items
     ]

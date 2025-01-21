@@ -66,13 +66,8 @@
             <div class="cart-summary">
               <h5>Cart Summary</h5>
               <hr>
-              <p><strong>Units:</strong> {{ cart_data|length }}</p>
-              <p><strong>Total:</strong> 
-                ${{ cart_data|sum:'price'|floatformat:2 }}
-              </p>
-              <hr>
               <button class="btn btn-warning w-100">Checkout</button>
-            </div>
+            </div>            
           </div>
         </div>
       {% else %}

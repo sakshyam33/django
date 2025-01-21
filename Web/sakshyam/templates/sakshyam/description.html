@@ -61,13 +61,13 @@
     </style>
 
     <div class="description-container">
-        <<img src="../../../media/{{chai.image}}" >
+        <img src="../../../media/{{chai.image}}" >
         <h1>{{ chai.name }}</h1>
         <p><strong>Type:</strong> {{ chai.get_ttype_display }}</p>
         <p><strong>Size:</strong> {{ chai.get_size_display }}</p>
         <p><strong>Description:</strong> {{ chai.description }}</p>
         <p><strong>Available Stock:</strong> {{ chai.amount }}</p>
-        
+        <p><strong>Price:</strong> Rs {{ chai.price}}</p>
         <div class="button-container">
             <a href="{% url 'menu' %}" class="back-link">Back to Menu</a>
             <form action="{% url 'add_cart' chai.id %}" method="post" >
