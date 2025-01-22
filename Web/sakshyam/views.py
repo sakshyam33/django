@@ -178,7 +178,7 @@ def checkout(request):
         form=Checkout(request.POST)
         if form.is_valid():
             form.save()
-            return render(request,'success.html')
-        else:
-            form=Checkout()
+            return redirect('success')
+    else:
+        form=Checkout()
     return render(request,'sakshyam/checkout.html',{'form':form})
