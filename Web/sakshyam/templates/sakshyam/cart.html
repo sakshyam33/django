@@ -51,11 +51,13 @@
               </div>
               <div class="col-3">
                 <div class="d-flex align-items-center">
-                  <button class="btn btn-danger" onclick="updateQuantity({{ forloop.counter0 }}, -1)">-</button>
+                  <!-- Update the onclick functions with chai_id -->
+                  <button class="btn btn-danger" onclick="updateQuantity('{{ item.id }}', -1)">-</button>
                   <input type="text" value="{{ item.quantity }}" readonly class="form-control mx-2">
-                  <button class="btn btn-primary" onclick="updateQuantity({{ forloop.counter0 }}, 1)">+</button>
+                  <button class="btn btn-primary" onclick="updateQuantity('{{ item.id }}', 1)">+</button>
                 </div>
               </div>
+              
               <div class="col-2">
                 <button class="btn btn-danger" onclick="removeItem({{ forloop.counter0 }})">Delete</button>
               </div>
@@ -66,7 +68,7 @@
             <div class="cart-summary">
               <h5>Cart Summary</h5>
               <hr>
-              <button class="btn btn-warning w-100">Checkout</button>
+              <a href="{% url 'checkout' %}" class="btn btn-warning w-100">Checkout</a>
             </div>            
           </div>
         </div>
@@ -79,21 +81,21 @@
   
   <script>
     function updateQuantity(chaiId, change) {
-      fetch(/update-cart/${chaiId}/, {
+      fetch(`/cart/update/${chaiId}/`, { // Use the correct URL pattern
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRFToken': '{{ csrf_token }}', // Include CSRF token
+          'X-CSRFToken': '{{ csrf_token }}', // Include CSRF token for POST requests
         },
         body: JSON.stringify({ change: change }),
       })
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            // Optionally update the cart UI
+            // Reload the page to reflect updated cart data
             location.reload();
           } else {
-            alert(data.message);
+            alert(data.message); // Show error message
           }
         })
         .catch(error => console.error('Error:', error));
