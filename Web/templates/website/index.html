@@ -163,7 +163,6 @@
     </style>
 </head>
 <body>
-
     <!-- Header -->
     <header>
         <h1>Welcome to Our Tea Shop</h1>
@@ -177,6 +176,8 @@
         <a href="{% url 'menu' %}">Menu</a>
         <a href="{% url 'contact' %}">Contact</a>
         <a href="{% url 'feedback' %}">Feedback</a>
+   
+        <a href="#"> {{ request.user.username}}</a>
     </nav>
 
     <!-- Hero section -->

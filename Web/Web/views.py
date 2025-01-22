@@ -57,7 +57,7 @@ def LoginPage(request):
     if request.method == "POST":
 
         username = request.POST.get('username')
-        password = request.POST.get('password')
+        password = request.POST.get('pass')
 
         # Check if the user exists
         user = User.objects.filter(username=username).first()
