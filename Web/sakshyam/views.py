@@ -3,7 +3,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from .models import ChaiVarity,Cart
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render
-from .forms import store,Checkout,FeedbackForm
+from .forms import store,Checkout_form,FeedbackForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -175,10 +175,10 @@ def view_cart(request):
     return render(request, 'sakshyam/cart.html', {'cart_data': cart_data})
 def checkout(request):
     if request.method=='POST':
-        form=Checkout(request.POST)
+        form=Checkout_form(request.POST)
         if form.is_valid():
             form.save()
             return redirect('success')
     else:
-        form=Checkout()
+        form=Checkout_form()
     return render(request,'sakshyam/checkout.html',{'form':form})

@@ -9,7 +9,14 @@ class Checkout_form(forms.ModelForm):
     class Meta:
         model=Checkout
         fields=['full_name','email','address','street','state','phone']
-
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'street': forms.TextInput(attrs={'class': 'form-control'}),
+            'state': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class FeedbackForm(forms.ModelForm):
