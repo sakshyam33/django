@@ -181,4 +181,22 @@ def checkout(request):
             return redirect('success')
     else:
         form=Checkout_form()
-    return render(request,'sakshyam/checkout.html',{'form':form})
+    
+    cart_items = Cart.objects.filter(user=request.user)
+
+    # Prepare data for the template
+    cart_data = [
+        {
+            'title': item.chai.name,  # Assuming 'product' has a 'name' field
+            'price': item.chai.price,  # Assuming 'product' has a 'price' field
+            'quantity': item.quantity,
+            'image': item.chai.image.url if item.chai.image else '',  # Assuming product image exists
+        }
+        for item in cart_items
+    ]
+    total_price=sum(item.chai.price*item.chai.quantity for item in cart_items)
+    context={
+        'cart_data':cart_items,
+        'total_price':total_price,
+    }
+    return render(request,'sakshyam/checkout.html',{'form':form},{'cart_data': cart_data})
