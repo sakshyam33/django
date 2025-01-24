@@ -11,6 +11,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('signup/', views.SignUppage, name='signup'),
     path('login/', views.LoginPage, name='login'),
+    path('logout/', views.Logout, name='logout_view'),
     path('item/', include('sakshyam.url')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('feedback/', views.feedback_view, name='feedback'),
