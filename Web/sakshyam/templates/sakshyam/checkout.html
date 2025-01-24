@@ -5,85 +5,204 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout Form</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #3a86ff;
+      --secondary-color: #8338ec;
+      --accent-color: #ff006e;
+      --background-color: #f8f9fa;
+      --text-color: #333333;
+      --border-color: #e0e0e0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    .checkout-form {
-      max-width: 800px;
-      margin: auto;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
       padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #f9f9f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .cart-items {
-      margin-bottom: 20px;
+
+    .checkout-container {
+      max-width: 1200px;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
     }
-    .cart-items img {
-      width: 50px;
+
+    .checkout-container:hover {
+      transform: translateY(-5px);
     }
-    .cart-summary {
-      padding: 10px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .form-control {
-      margin-bottom: 15px;
-    }
-    .btn-checkout {
-      background-color: #28a745;
+
+    .checkout-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
-      font-size: 16px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      padding: 30px;
+      text-align: center;
     }
+
+    .checkout-header h2 {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .checkout-content {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .checkout-form,
+    .cart-summary {
+      flex: 1;
+      min-width: 300px;
+      padding: 40px;
+    }
+
+    .cart-summary {
+      background-color: #f9f9f9;
+      border-left: 1px solid var(--border-color);
+    }
+
+    .form-control {
+      margin-bottom: 25px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+    }
+
+    .btn-checkout {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     .btn-checkout:hover {
-      background-color: #218838;
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--border-color);
+      transition: transform 0.3s ease;
+    }
+
+    .cart-item:hover {
+      transform: translateX(5px);
+    }
+
+    .cart-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+    }
+
+    .cart-item-price,
+    .cart-item-quantity {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .cart-total {
+      font-size: 1.4em;
+      font-weight: 600;
+      text-align: right;
+      margin-top: 30px;
+      color: var(--accent-color);
+    }
+
+    @media (max-width: 768px) {
+      .checkout-content {
+        flex-direction: column;
+      }
+
+      .cart-summary {
+        border-left: none;
+        border-top: 1px solid var(--border-color);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="checkout-form">
-    <h2 class="text-center">Checkout Form</h2>
-    <form method="POST" id="checkoutForm">
-      {% csrf_token %}
-      <!-- Render the Django form dynamically -->
-      {{ form.as_p }}
+  <div class="checkout-container">
+    <div class="checkout-header">
+      <h2>Complete Your Purchase</h2>
+    </div>
+    <div class="checkout-content">
+      <div class="checkout-form">
+        <form method="POST" id="checkoutForm">
+          {% csrf_token %}
+          <!-- Render the Django form dynamically -->
+          {{ form.as_p }}
 
-      <!-- Cart Items -->
-      <div class="cart-items">
-        <h4>Cart Items</h4>
+          <!-- Checkout Button -->
+          <button type="submit" class="btn-checkout">Complete Purchase</button>
+        </form>
+      </div>
+
+      <div class="cart-summary">
+        <h4>Order Summary</h4>
         <div id="cartItemList">
           {% if cart_data %}
             {% for item in cart_data %}
-              <div class="row align-items-center mb-2">
-                <div class="col-2">
-                  <img src="{{ item.image }}" alt="{{ item.title }}" class="img-fluid">
-                </div>
-                <div class="col-6">
-                  <strong>{{ item.title }}</strong>
-                  <p>Price: ${{ item.price }}</p>
-                  <p>Quantity: {{ item.quantity }}</p>
+              <div class="cart-item">
+                <img src="{{ item.image }}" alt="{{ item.title }}">
+                <div class="cart-item-details">
+                  <div class="cart-item-title">{{ item.title }}</div>
+                  <div class="cart-item-price">Price: ${{ item.price }}</div>
+                  <div class="cart-item-quantity">Quantity: {{ item.quantity }}</div>
                 </div>
               </div>
-              <hr>
             {% endfor %}
-            <h5 class="text-end">Total Price: ${{ total_price }}</h5>
+            <div class="cart-total">Total: ${{ total_price }}</div>
           {% else %}
             <p class="text-danger">Your cart is empty.</p>
           {% endif %}
         </div>
       </div>
-
-      <!-- Checkout Button -->
-      <button type="submit" class="btn-checkout">Checkout</button>
-      
-    </form>
+    </div>
   </div>
 </body>
 </html>
+
