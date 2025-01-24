@@ -174,29 +174,32 @@ def view_cart(request):
 
     return render(request, 'sakshyam/cart.html', {'cart_data': cart_data})
 def checkout(request):
-    if request.method=='POST':
-        form=Checkout_form(request.POST)
+    if request.method == 'POST':
+        form = Checkout_form(request.POST)
         if form.is_valid():
             form.save()
             return redirect('success')
     else:
-        form=Checkout_form()
+        form = Checkout_form()
     
     cart_items = Cart.objects.filter(user=request.user)
 
     # Prepare data for the template
     cart_data = [
         {
-            'title': item.chai.name,  # Assuming 'product' has a 'name' field
-            'price': item.chai.price,  # Assuming 'product' has a 'price' field
+            'title': item.chai.name if item.chai else "Unknown Product",
+            'price': item.chai.price if item.chai else 0,
             'quantity': item.quantity,
-            'image': item.chai.image.url if item.chai.image else '',  # Assuming product image exists
+            'image': item.chai.image.url if item.chai and item.chai.image else '',
         }
         for item in cart_items
     ]
-    total_price=sum(item.chai.price*item.chai.quantity for item in cart_items)
-    context={
-        'cart_data':cart_items,
-        'total_price':total_price,
+    total_price = sum(item['price'] * item['quantity'] for item in cart_data)
+    
+    context = {
+        'form': form,
+        'cart_data': cart_data,  # Use the processed list
+        'total_price': total_price,
     }
-    return render(request,'sakshyam/checkout.html',{'form':form},{'cart_data': cart_data})
+    return render(request, 'sakshyam/checkout.html', context)
+

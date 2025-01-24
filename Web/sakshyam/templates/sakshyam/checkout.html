@@ -58,49 +58,31 @@
       <!-- Cart Items -->
       <div class="cart-items">
         <h4>Cart Items</h4>
-        <div id="cartItemList"></div>
+        <div id="cartItemList">
+          {% if cart_data %}
+            {% for item in cart_data %}
+              <div class="row align-items-center mb-2">
+                <div class="col-2">
+                  <img src="{{ item.image }}" alt="{{ item.title }}" class="img-fluid">
+                </div>
+                <div class="col-6">
+                  <strong>{{ item.title }}</strong>
+                  <p>Price: ${{ item.price }}</p>
+                  <p>Quantity: {{ item.quantity }}</p>
+                </div>
+              </div>
+              <hr>
+            {% endfor %}
+            <h5 class="text-end">Total Price: ${{ total_price }}</h5>
+          {% else %}
+            <p class="text-danger">Your cart is empty.</p>
+          {% endif %}
+        </div>
       </div>
 
       <!-- Checkout Button -->
       <button type="submit" class="btn-checkout">Checkout</button>
     </form>
   </div>
-
-  <script>
-    // Sample cart data (simulating localStorage)
-    const cartData = [
-      { title: "Product 1", price: 20, quantity: 2, image: "https://via.placeholder.com/50" },
-      { title: "Product 2", price: 15, quantity: 1, image: "https://via.placeholder.com/50" },
-    ];
-
-    // Load cart items into the form
-    const cartItemList = document.getElementById("cartItemList");
-    function loadCartItems() {
-      if (cartData.length === 0) {
-        cartItemList.innerHTML = "<p class='text-danger'>Your cart is empty.</p>";
-        return;
-      }
-
-      let cartHTML = cartData.map(
-        (item) => `
-          <div class="row align-items-center mb-2">
-            <div class="col-2">
-              <img src="${item.image}" alt="${item.title}" class="img-fluid">
-            </div>
-            <div class="col-6">
-              <strong>${item.title}</strong>
-              <p>Price: $${item.price}</p>
-              <p>Quantity: ${item.quantity}</p>
-            </div>
-          </div>
-          <hr>
-        `
-      ).join("");
-      cartItemList.innerHTML = cartHTML;
-    }
-
-    // Load cart items on page load
-    loadCartItems();
-  </script>
 </body>
 </html>
