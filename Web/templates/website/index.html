@@ -45,6 +45,8 @@
             background-color: #34495e;
             text-align: center;
             padding: 10px;
+            display:flex;
+            justify-content:space-between
         }
 
         nav a {
@@ -159,6 +161,44 @@
             color: white;
             padding: 10px;
             text-align: center;
+            
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .user-dropdown {
+            min-width: 200px;
+        }
+        .user-info {
+            padding: 15px;
+            background-color: #f1f3f5;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+        .user-info h6 {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        .user-info p {
+            margin-bottom: 5px;
+            color: #6c757d;
+        }
+        .user-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -171,13 +211,22 @@
 
     <!-- Navigation -->
     <nav>
-        <a href="{% url 'home' %}">Home</a>
+        <div></div>
+       <div> <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'about' %}">About Us</a>
         <a href="{% url 'menu' %}">Menu</a>
         <a href="{% url 'contact' %}">Contact</a>
-        <a href="{% url 'feedback' %}">Feedback</a>
+        <a href="{% url 'feedback' %}">Feedback</a></div>
+        <span class="navbar-nav ms-auto">
+            <span class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="user-icon">{{ username|first|upper }}</span>
+                    {{ username }}
+                </a>
+            </span>
+        </span>
    
-        <a href="#"> {{ request.user.username}}</a>
+       
     </nav>
 
     <!-- Hero section -->

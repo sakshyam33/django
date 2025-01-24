@@ -4,10 +4,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from sakshyam.forms import ContactForm,FeedbackForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def home(request):
+   username=request.session.get('username','guest')
     # return HttpResponse("you are at sakshyam's shop")
-    return render(request,'website/index.html')
+   return render(request,'website/index.html',{'username':username})
 def about(request):
     # return HttpResponse("you are at sakshyam's about")
     return render(request,'website/about.html')
@@ -71,6 +73,7 @@ def LoginPage(request):
 
         if user is not None:
             login(request, user)
+            request.session['username']=username
             return redirect('home')
         else:
             messages.error(request, "Incorrect password.")
@@ -91,3 +94,11 @@ def feedback_view(request):
         form = FeedbackForm()
     
     return render(request, 'feedback.html', {'form': form})
+
+@login_required
+def DisplayUser(request):
+    context={
+        'username':request.user.username,
+        'email':request.user.email,
+    }
+    return render(request,'userinfo.html',context)

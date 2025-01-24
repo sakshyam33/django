@@ -15,4 +15,5 @@ urlpatterns = [
     path('item/', include('sakshyam.url')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('feedback/', views.feedback_view, name='feedback'),
+    path('info/',views.DisplayUser,name='display'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
