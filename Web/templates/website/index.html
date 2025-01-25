@@ -206,9 +206,13 @@
     <!-- Header -->
     <header>
         <h1>Welcome to Our Tea Shop</h1>
-        <a href="{% url 'login' %}" class="login-signup">Login / Signup</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout_view' %}" class="login-signup">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="login-signup">Login / Signup</a>
+        {% endif %}
     </header>
-
+    
     <!-- Navigation -->
     <nav>
         <div></div>

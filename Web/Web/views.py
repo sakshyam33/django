@@ -83,7 +83,7 @@ def LoginPage(request):
 
 def Logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 def feedback_view(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
