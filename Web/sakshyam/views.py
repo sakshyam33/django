@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 def thanks(request):
-    return render(request,'thanks.html')
+    return render(request,'sakshyam/thanks.html')
 def all(request):
     chais = ChaiVarity.objects.all()
     return render(request, 'sakshyam/all_item.html', {'chais': chais})
@@ -173,15 +173,20 @@ def view_cart(request):
     ]
 
     return render(request, 'sakshyam/cart.html', {'cart_data': cart_data})
+
+@login_required
 def checkout(request):
     if request.method == 'POST':
         form = Checkout_form(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('success')
+            checkout_instance = form.save(commit=False)  # Create the Checkout instance without saving it yet
+            checkout_instance.user = request.user       # Assign the logged-in user
+            checkout_instance.save()                    # Now save it to the database
+            return redirect('success')                  # Redirect to success page
     else:
         form = Checkout_form()
     
+    # Fetch the user's cart items
     cart_items = Cart.objects.filter(user=request.user)
 
     # Prepare data for the template
@@ -202,4 +207,5 @@ def checkout(request):
         'total_price': total_price,
     }
     return render(request, 'sakshyam/checkout.html', context)
+
 
