@@ -140,7 +140,7 @@
     <div class="tea-cards-container">
         {% for chai in chais %}
             <div class="card">
-                <img src="../../../media/{{chai.image}}" >
+                <img style="width:300px; height:300px; object-fit:cover;" src="../../../media/{{chai.image}}" >
                 <div class="card-body">
                     <h5 class="card-title">{{ chai.name }}</h5>
                     {% comment %} <p class="card-text">{{ chai.description }}</p> {% endcomment %}

@@ -52,14 +52,14 @@
               <div class="col-3">
                 <div class="d-flex align-items-center">
                   <!-- Update the onclick functions with chai_id -->
-                  <button class="btn btn-danger" onclick="updateQuantity('{{ item.id }}', -1)">-</button>
+                 
                   <input type="text" value="{{ item.quantity }}" readonly class="form-control mx-2">
-                  <button class="btn btn-primary" onclick="updateQuantity('{{ item.id }}', 1)">+</button>
+                  
                 </div>
               </div>
               
               <div class="col-2">
-                <button class="btn btn-danger" onclick="removeItem({{ forloop.counter0 }})">Delete</button>
+                <!-- <button class="btn btn-danger" onclick="removeItem({{ forloop.counter0 }})">Delete</button> -->
               </div>
             </div>
             {% endfor %}
@@ -79,7 +79,7 @@
   </div>
 
   
-  <script>
+  <!-- <script>
     function updateQuantity(chaiId, change) {
       fetch(`/cart/update/${chaiId}/`, { // Use the correct URL pattern
         method: 'POST',
@@ -100,7 +100,7 @@
         })
         .catch(error => console.error('Error:', error));
     }
-</script>
+</script> -->
 
 
 </body>
